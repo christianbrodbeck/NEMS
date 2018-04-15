@@ -1,12 +1,20 @@
 import numpy as np
 from numpy import exp
 
-def short_term_plasticity(rec, i, o, u, tau, crosstalk=0):
+def short_term_plasticity(rec, i, o, u, tau, crosstalk=0, common_parameter=False):
     '''
     STP applied to each input channel.
+
+    Parameters
+    ----------
+    ...
+
+    Notes
+    -----
     parameterized by Markram-Todyks model:
         u (release probability)
         tau (recovery time constant)
+
     '''
 
     fn = lambda x : _stp(x, u, tau, crosstalk, rec[i].fs)
@@ -18,7 +26,7 @@ def _stp(X, u, tau, crosstalk=0, fs=1):
     """
     STP core function
     """
-    s = X.shape
+    n_channels, n_times = X.shape
     tstim = X.copy()
     tstim[np.isnan(tstim)] = 0
     tstim[tstim < 0] = 0
@@ -44,14 +52,14 @@ def _stp(X, u, tau, crosstalk=0, fs=1):
 
     # go through each stimulus channel
     stim_out = tstim  # allocate scaling term
-    for i in range(0, s[0]):
+    for i in range(0, n_channels):
         td = 1  # initialize, dep state of previous time bin
         a = 1/taui[i]
         ustim = 1.0/taui[i] + ui[i] * tstim[i, :]
         # ustim = ui[i] * tstim[i, :]
         if ui[i] > 0:
             # depression
-            for tt in range(1, s[1]):
+            for tt in range(1, n_times):
                 # td = di[i, tt - 1]  # previous time bin depression
                 # delta = (1 - td) / taui[i] - ui[i] * td * tstim[i, tt - 1]
                 # delta = (1 - td) / taui[i] - td * ustim[tt - 1]
@@ -61,7 +69,7 @@ def _stp(X, u, tau, crosstalk=0, fs=1):
                 stim_out[i, tt] *= td
         else:
             # facilitation
-            for tt in range(1, s[1]):
+            for tt in range(1, n_times):
                 delta = a - td * ustim[tt - 1]
                 td = td + delta
                 #td = np.min([td, 1])

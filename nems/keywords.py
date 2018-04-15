@@ -243,7 +243,7 @@ for n_inputs in (1, 2, 3):
         defkey_wccn(n_inputs, n_outputs)
 
 for n_outputs in (1, 2, 3, 4):
-    for n_coefs in (10, 15, 18):
+    for n_coefs in (10, 15, 18, 30):
         defkey_fir(n_coefs, n_outputs)
 
 # defkey_fir(10, 2)
@@ -260,6 +260,15 @@ defkey('stp1',
        {'fn': 'nems.modules.stp.short_term_plasticity',
         'fn_kwargs': {'i': 'pred',
                       'o': 'pred',
+                      'crosstalk': 0},
+        'prior': {'u': ('Normal', {'mean': [0.01], 'sd': [0.01]}),
+                  'tau': ('Normal', {'mean': [0.04], 'sd': [0.01]})}})
+
+defkey('stp1f1',
+       {'fn': 'nems.modules.stp.short_term_plasticity',
+        'fn_kwargs': {'i': 'pred',
+                      'o': 'pred',
+                      'common_parameters': True,
                       'crosstalk': 0},
         'prior': {'u': ('Normal', {'mean': [0.01], 'sd': [0.01]}),
                   'tau': ('Normal', {'mean': [0.04], 'sd': [0.01]})}})
@@ -384,3 +393,8 @@ defkey('psth',
                       'o': 'pred'}
         })
 
+defkey('sum',
+       {'fn': 'nems.modules.sum.sum_channels',
+        'fn_kwargs': {'i': 'resp',
+                      'o': 'pred'}
+        })

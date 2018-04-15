@@ -190,7 +190,7 @@ def quickplot(ctx, default='val', epoch=None, occurrence=None, figsize=None,
             plot_scatter, pred, resp, text=text, smoothing_bins=False,
             title='Unsmoothed', force_square=False,
             )
-    _plot_axes([1, 1], [smoothed, not_smoothed], -1)
+    # _plot_axes([1, 1], [smoothed, not_smoothed], -1)
 
     # TODO: Pred Error histogram too? Or was that not useful?
 

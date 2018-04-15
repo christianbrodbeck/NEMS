@@ -53,8 +53,8 @@ def test_stp():
     pred = signal.RasterizedSignal(**kwargs)
     rec = recording.Recording({'pred': pred})
 
-    u = np.array([5.0])
-    tau = np.array([8.0])
+    u = np.array([0.05])
+    tau = np.array([0.08])
 
     r = stp.short_term_plasticity(rec, 'pred', 'pred_out', u=u, tau=tau)
     pred_out = r[0]
