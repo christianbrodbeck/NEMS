@@ -657,7 +657,14 @@ class RasterizedSignal(SignalBase):
         '''
         Parameters
         ----------
+        fs : int
+            Sampling frequency.
         data : ndarray, 2 dimensional
+            Data.
+        name : str
+            Name for the signal.
+        recording : str
+            Recording identifier, links stimulus and response
         epochs : {None, DataFrame}
             Epochs are periods of time that are tagged with a name
             When defined, the DataFrame should have these first three columns:
