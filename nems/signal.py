@@ -692,6 +692,14 @@ class RasterizedSignal(SignalBase):
         if safety_checks:
             self._run_safety_checks()
 
+    def __repr__(self):
+        length = self.ntimes / self.fs
+        params = ['%i chs x %.3f s at %g Hz' % (self.nchans, length, self.fs)]
+        if self.epochs is not None:
+            params.append('%i epochs' % len(self.epochs))
+        return "<%s %r: %s>" % (self.__class__.__name__, self.name,
+                                ', '.join(params))
+
     @classmethod
     def from_3darray(cls, fs, array, name, recording, epoch_name='TRIAL',
                      chans=None, meta=None, safety_cheks=True):

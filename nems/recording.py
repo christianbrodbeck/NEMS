@@ -37,6 +37,10 @@ class Recording:
         self.name = recordings[0]
         self.uri = None  # This will be lost on copying
 
+    def __repr__(self):
+        signal_reprs = ("  %r: %s" % item for item in self.signals.items())
+        return "<Recording:\n%s\n>" % '\n'.join(signal_reprs)
+
     def copy(self):
         '''
         Returns a copy of this recording.
@@ -502,7 +506,7 @@ class Recording:
         return self.split_by_epochs(lo_rep_epochs, hi_rep_epochs)
 
     def jackknife_by_epoch(self, njacks, jack_idx, epoch_name,
-                           tiled=True,invert=False,
+                           tiled=True, invert=False,
                            only_signals=None, excise=False):
         '''
         By default, calls jackknifed_by_epochs on all signals and returns a new
