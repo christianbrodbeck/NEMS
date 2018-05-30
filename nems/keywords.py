@@ -300,6 +300,14 @@ defkey('stpn2',
         'prior': {'u': ('Normal', {'mean': [1, 1], 'sd': [1, 1]}),
                   'tau': ('Normal', {'mean': [4, 4], 'sd': [5, 5]})}})
 
+defkey('stp16',
+       {'fn': 'nems.modules.stp.short_term_plasticity',
+        'fn_kwargs': {'i': 'pred',
+                      'o': 'pred',
+                      'crosstalk': 0},
+        'prior': {'u': ('Normal', {'mean': [0.01] * 16, 'sd': [0.01] * 16}),
+                  'tau': ('Normal', {'mean': [0.04] * 16, 'sd': [0.05] * 16})}})
+
 defkey('dexp1',
        {'fn': 'nems.modules.nonlinearity.double_exponential',
         'fn_kwargs': {'i': 'pred',
@@ -391,6 +399,30 @@ defkey('psth',
        {'fn': 'nems.modules.signal_mod.average_sig',
         'fn_kwargs': {'i': 'resp',
                       'o': 'pred'}
+        })
+
+defkey('rep2',
+       {'fn': 'nems.modules.signal_mod.replicate_channels',
+        'fn_kwargs': {'i': 'pred',
+                      'o': 'pred',
+                      'repcount': 2},
+        'phi': {}
+        })
+
+defkey('rep3',
+       {'fn': 'nems.modules.signal_mod.replicate_channels',
+        'fn_kwargs': {'i': 'pred',
+                      'o': 'pred',
+                      'repcount': 3},
+        'phi': {}
+        })
+
+defkey('mrg',
+       {'fn': 'nems.modules.signal_mod.merge_channels',
+        'fn_kwargs': {'i': 'pred',
+                      'o': 'pred',
+                      's': 'state'},
+        'phi': {}
         })
 
 defkey('sum',
